@@ -21,7 +21,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setImgChoose()
-        //        print(Int.random(in: 1...100))
         viewContainResult.layer.opacity = 0
     }
     
@@ -41,13 +40,13 @@ class ViewController: UIViewController {
     
     @IBAction func chooseThree(_ sender: Any) {
         computerChoose = getRandom()
-        myChoose = 2
+        myChoose = 3
         displayResult()
         viewContainResult.layer.opacity = 1
     }
     @IBAction func chooseTwo(_ sender: Any) {
         computerChoose = getRandom()
-        myChoose = 3
+        myChoose = 2
         displayResult()
         viewContainResult.layer.opacity = 1
     }
@@ -62,58 +61,47 @@ class ViewController: UIViewController {
     func setImgMyResult(){
         switch myChoose {
         case 1:
-            imgMyResult.image = .iconsHandOne
+            imgMyResult.image = UIImage(named: "iconsHandOne")
         case 2:
-            imgMyResult.image = .iconsHandTwo
+            imgMyResult.image = UIImage(named: "iconsHandTwo")
         case 3:
-            imgMyResult.image = .iconsHandThree
+            imgMyResult.image = UIImage(named: "iconsHandThree")
         default:
             break
         }
+        imgMyResult.transform = CGAffineTransform(rotationAngle: 90 * .pi/180)
     }
     
     func setImgComputerResult(){
         switch computerChoose {
         case 1:
-            imgComputerResult.image = .iconsHandOne
+            imgComputerResult.image = UIImage(named: "iconsHandOne")
         case 2:
-            imgComputerResult.image = .iconsHandTwo
+            imgComputerResult.image = UIImage(named: "iconsHandTwo")
         case 3:
-            imgComputerResult.image = .iconsHandThree
+            imgComputerResult.image = UIImage(named: "iconsHandThree")
         default:
             break
         }
+        imgComputerResult.transform = CGAffineTransform(rotationAngle: 270 * .pi/180).concatenating(CGAffineTransform(scaleX: 1, y: -1))
     }
     
     func getLabelResult() -> String {
-        switch myChoose {
-        case 1:
-            if computerChoose == 2 {
-                return "WIN"
-            }else if computerChoose == 3{
-                return "LOSE"
-            }else{
-                return "DRAW"
-            }
-        case 2:
-            if computerChoose == 2 {
-                return "DRAW"
-            }else if computerChoose == 3{
-                return "WIN"
-            }else{
-                return "LOSE"
-            }
-        case 3:
-            if computerChoose == 2 {
-                return "LOSE"
-            }else if computerChoose == 3{
-                return "DRAW"
-            }else{
-                return "WIN"
-            }
-        default:
-            return ""
+        if myChoose == computerChoose {
+            return "DRAW"
         }
+        if myChoose == 1 && computerChoose == 3{
+            return "LOSE"
+        }
+        
+        if myChoose == 3 && computerChoose == 1{
+            return "WIN"
+        }
+        
+        if myChoose < computerChoose {
+            return "WIN"
+        }
+        return "LOSE"
     }
     
     func getRandom() -> Int{
